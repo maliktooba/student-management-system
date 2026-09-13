@@ -1,0 +1,6 @@
+Create venv: 
+python -m venv venv
+Activate it:
+Windows (PowerShell): venv\Scripts\Activate.ps1
+Run the server:
+python manage.py runserver

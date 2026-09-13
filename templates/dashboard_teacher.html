@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}Teacher Dashboard{% endblock %}
+{% block content %}
+
+<h2 class="mb-4">Teacher Dashboard</h2>
+
+<h4>Your Courses</h4>
+<div class="list-group">
+    {% for course in courses %}
+    <div class="list-group-item d-flex justify-content-between align-items-center">
+        <span>{{ course.code }} - {{ course.name }}</span>
+        <div>
+            <a href="{% url 'mark_attendance' course.id %}" class="btn btn-primary btn-sm">Mark Attendance</a>
+            <a href="{% url 'enter_marks' course.id %}" class="btn btn-secondary btn-sm">Enter Marks</a>
+        </div>
+    </div>
+    {% empty %}
+    <p>No courses assigned yet.</p>
+    {% endfor %}
+</div>
+
+{% endblock %}

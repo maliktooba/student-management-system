@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block title %}Student Dashboard{% endblock %}
+{% block content %}
+
+<h2 class="mb-4">Student Dashboard</h2>
+
+<h4>Enrolled Courses</h4>
+<ul class="list-group mb-4">
+    {% for enrollment in enrollments %}
+        <li class="list-group-item">{{ enrollment.course.code }} - {{ enrollment.course.name }}</li>
+    {% empty %}
+        <li class="list-group-item">Not enrolled in any courses yet.</li>
+    {% endfor %}
+</ul>
+
+<h4>Attendance History</h4>
+<table class="table table-bordered table-striped bg-white">
+    <thead class="table-dark">
+        <tr><th>Course</th><th>Date</th><th>Status</th></tr>
+    </thead>
+    <tbody>
+        {% for record in attendance_records %}
+        <tr>
+            <td>{{ record.course.code }}</td>
+            <td>{{ record.date }}</td>
+            <td>
+                <span class="badge {% if record.status == 'PRESENT' %}bg-success{% elif record.status == 'ABSENT' %}bg-danger{% else %}bg-warning{% endif %}">
+                    {{ record.get_status_display }}
+                </span>
+            </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="3">No attendance records yet.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h4>Marks</h4>
+<table class="table table-bordered table-striped bg-white">
+    <thead class="table-dark">
+        <tr><th>Course</th><th>Exam Type</th><th>Marks</th><th>Percentage</th></tr>
+    </thead>
+    <tbody>
+        {% for mark in marks_records %}
+        <tr>
+            <td>{{ mark.course.code }}</td>
+            <td>{{ mark.get_exam_type_display }}</td>
+            <td>{{ mark.marks_obtained }} / {{ mark.total_marks }}</td>
+            <td>{{ mark.percentage }}%</td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="4">No marks recorded yet.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
